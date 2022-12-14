@@ -1,4 +1,4 @@
-import { Close, ExpandMore } from "@mui/icons-material";
+import { Add, Close, ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Container,
+  Fab,
   Grid,
   IconButton,
   Paper,
@@ -19,6 +20,7 @@ const Static = () => {
   const [pickedSeat, setPickedSeat] = React.useState([]);
   const [amount, setAmount] = React.useState(0);
   const [section, setSection] = React.useState([]);
+  const [controls,setControls] = React.useState([])
   const [show, setShow] = React.useState(false);
   const [size, setSize] = React.useState("xl");
 
@@ -181,30 +183,31 @@ const Static = () => {
     let newValue = section.filter((el) => {
       return el !== sec;
     });
+    setControls(newValue)
     setSection(newValue);
   };
 
   const handleSectionControls = (e, idx) => {
-    let allValues = section;
-    let capturedValue = section[idx];
+    let allValues = controls;
+    let capturedValue = controls[idx];
     switch (e.target.name) {
       case "color":
         capturedValue.color = e.target.value;
         allValues[idx] = capturedValue;
-        return setSection(allValues);
+        return setControls(allValues);
 
       case "seats":
         capturedValue.seats = Number(e.target.value);
         allValues[idx] = capturedValue;
-        return setSection(allValues);
+        return setControls(allValues);
       case "price":
         capturedValue.price = Number(e.target.value);
         allValues[idx] = capturedValue;
-        return setSection(allValues);
+        return setControls(allValues);
       default:
         break;
     }
- 
+
   };
 
   React.useEffect(() => {
@@ -225,10 +228,7 @@ const Static = () => {
       default:
         break;
     }
-
-
-
-  }, [section, setSection]);
+  });
   return (
     <Box
       sx={{
@@ -272,17 +272,17 @@ const Static = () => {
           variant="contained"
           color="warning"
           fullWidth
-          onClick={() =>
-            setSection((prevValue) => [
+          onClick={() =>{
+            setControls((prevValue) => [
               ...prevValue,
               { seats: 0, color: "", price: 0 },
             ])
-          }
+          }}
         >
           Add Section
         </Button>
 
-        {section.map((sec, idx) => {
+        {controls.map((sec, idx) => {
           return (
             <Accordion key={idx} sx={{ width: "100%", mt: 1 }}>
               <AccordionSummary
@@ -330,6 +330,14 @@ const Static = () => {
                   fullWidth
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
+                <Box sx={{width:"100%",display:"flex",justifyContent:"end",alignItems:"center",p:1}}>
+                  <Fab size="small" sx={{backgroundColor:section[idx]?.color}}
+                   onClick={() => setSection(controls)}
+                    
+                  >
+                    <Add/>
+                  </Fab>
+                </Box>
               </AccordionDetails>
             </Accordion>
           );
