@@ -2,7 +2,7 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Box, Container } from "@mui/material";
+import { Container } from "@mui/material";
 
 export default function ButtonAppBar() {
   // const [open, setOpen] = React.useState(false);

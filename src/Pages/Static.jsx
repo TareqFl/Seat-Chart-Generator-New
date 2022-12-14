@@ -43,16 +43,38 @@ const Static = () => {
   // Generate Sections
   const SectionsGenerated = ({ value }) => {
     return value?.map((sec, idx) => {
-      return (
-        <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
-          <SeatsGenerated
-            SectionIndex={idx + 1}
-            seats={sec.seats}
-            color={sec.color}
-            price={sec.price}
-          />
-        </Grid>
-      );
+      // return (
+      //   <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
+      //     <SeatsGenerated
+      //       SectionIndex={idx + 1}
+      //       seats={sec.seats}
+      //       color={sec.color}
+      //       price={sec.price}
+      //     />
+      //   </Grid>
+      // );
+      if(sec.seats && sec.color && sec.price){
+        return (
+          <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
+            <SeatsGenerated
+              SectionIndex={idx + 1}
+              seats={sec.seats}
+              color={sec.color}
+              price={sec.price}
+            />
+          </Grid>
+        );
+      }else{
+        return (
+          <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
+           <Grid Item xs={12}>
+            <Typography variant="h1" textAlign="center">
+              Insert Data
+            </Typography>
+           </Grid>
+          </Grid>
+        );
+      }
     });
   };
 
@@ -65,7 +87,7 @@ const Static = () => {
         defaultSeats.push("Seat");
       }
     } else {
-      // return;
+    
       defaultSeats = [];
     }
 
@@ -182,6 +204,7 @@ const Static = () => {
       default:
         break;
     }
+ 
   };
 
   React.useEffect(() => {
@@ -202,6 +225,9 @@ const Static = () => {
       default:
         break;
     }
+
+
+
   }, [section, setSection]);
   return (
     <Box
@@ -217,22 +243,25 @@ const Static = () => {
       {/* Controls */}
       <Button
         variant="contained"
-        sx={{ position: "absolute", top: "15%", left: "5%" }}
+        sx={{ position: "absolute", top: "15%", left: {xs:"5%",md:"2.5%"} }}
         onClick={() => setShow(!show)}
       >
         Controls
       </Button>
+
+
+      {/* Add Section Controls */}
       <Paper
         elevation={0}
         sx={{
           height: "50vh",
-          width: { xs: "50%", sm: "25%", md: "12%" },
+          width: { xs: "50%", sm: "25%", md: "10%" },
           backgroundColor: "transparent",
           position: "absolute",
           left: {
             xs: show ? "1.5%" : "-50.5%",
             sm: show ? "1.5%" : "-25.5%",
-            md: show ? "1.5%" : "-12.5%",
+            md: show ? "0.5%" : "-12.5%",
           },
           overflowY: "scroll",
           transition: "0.375s",
@@ -376,7 +405,7 @@ const Static = () => {
               >
                 <PickedSeat />
               </Stack>
-              <Typography variant="h6">{`Total Amount: ${amount}$`}</Typography>
+              <Typography variant="h6">{`Total Amount: ${amount ? amount : 0}$`}</Typography>
               <Typography variant="h6">{`Total Seats: ${pickedSeat.length}`}</Typography>
               <Button variant="contained" fullWidth>
                 Continue to Checkout
