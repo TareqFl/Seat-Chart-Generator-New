@@ -256,7 +256,7 @@ const Static = () => {
             xs: show ? "1.5%" : "-50.5%",
             sm: show ? "1.5%" : "-25.5%",
             lg: show ? "0.75%" : "-20%",
-            xl: show ? "0.5%" : "-12.5%",
+            xl: show ? "0.5%" : "-20%",
           },
           overflowY: "scroll",
           transition: "0.375s",
