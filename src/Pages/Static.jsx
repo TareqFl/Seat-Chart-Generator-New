@@ -1,4 +1,4 @@
-import { Add, Close, ExpandMore } from "@mui/icons-material";
+import {Close, ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -6,7 +6,6 @@ import {
   Box,
   Button,
   Container,
-  Fab,
   Grid,
   IconButton,
   Paper,
@@ -45,26 +44,20 @@ const Static = () => {
   // Generate Sections
   const SectionsGenerated = ({ value }) => {
     return value?.map((sec, idx) => {
-      // return (
-      //   <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
-      //     <SeatsGenerated
-      //       SectionIndex={idx + 1}
-      //       seats={sec.seats}
-      //       color={sec.color}
-      //       price={sec.price}
-      //     />
-      //   </Grid>
-      // );
-      if(sec.seats && sec.color && sec.price){
+ 
+      if(sec.seats && sec.color && sec.price && sec.section){
         return (
+         <Box>
+          <Typography variant="h6" textAlign="center">{`Section ${sec.section}`}</Typography>
           <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
             <SeatsGenerated
-              SectionIndex={idx + 1}
+              SectionIndex={sec.section}
               seats={sec.seats}
               color={sec.color}
               price={sec.price} 
             />
           </Grid>
+         </Box>
         );
       }else{
         return (
@@ -183,6 +176,7 @@ const Static = () => {
     let newValue = section.filter((el) => {
       return el !== sec;
     });
+   
     setControls(newValue)
     setSection(newValue);
   };
@@ -194,7 +188,9 @@ const Static = () => {
       case "color":
         capturedValue.color = e.target.value;
         return setSection(allValues);
-
+        case "section":
+          capturedValue.section = e.target.value;
+          return setSection(allValues);
       case "seats":
         capturedValue.seats = Number(e.target.value);
         return setSection(allValues);
@@ -235,6 +231,7 @@ const Static = () => {
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
+
       }}
     >
       {/* Controls */}
@@ -252,13 +249,14 @@ const Static = () => {
         elevation={0}
         sx={{
           height: "50vh",
-          width: { xs: "50%", sm: "25%", md: "10%" },
+          width: { xs: "50%", sm: "25%", lg: "20%",xl:"15%" },
           backgroundColor: "transparent",
           position: "absolute",
           left: {
             xs: show ? "1.5%" : "-50.5%",
             sm: show ? "1.5%" : "-25.5%",
-            md: show ? "0.5%" : "-12.5%",
+            lg: show ? "0.75%" : "-20%",
+            xl: show ? "0.5%" : "-12.5%",
           },
           overflowY: "scroll",
           transition: "0.375s",
@@ -327,6 +325,13 @@ const Static = () => {
                   fullWidth
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
+                  <TextField
+                  variant="standard"
+                  name={`section`}
+                  label={`Enter Section`}
+                  fullWidth
+                  onChange={(e) => handleSectionControls(e, idx)}
+                />
               </AccordionDetails>
             </Accordion>
           );
@@ -338,6 +343,7 @@ const Static = () => {
         sx={{
           height: "800px",
           transition: "1s",
+          mt:{xs:1,sm:35,lg:50,xl:0}
         }}
         maxWidth={size}
       >
@@ -377,7 +383,8 @@ const Static = () => {
             >
               <Box sx={{ width: "1200px", p: 4 }}>
                 <SectionsGenerated
-                  value={section.length > 0 ? section : sections}
+                  // value={section.length > 0 ? section : sections}
+                  value={section}
                 />
               </Box>
             </Box>
