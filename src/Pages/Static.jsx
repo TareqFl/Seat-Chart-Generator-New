@@ -62,7 +62,7 @@ const Static = () => {
               SectionIndex={idx + 1}
               seats={sec.seats}
               color={sec.color}
-              price={sec.price}
+              price={sec.price} 
             />
           </Grid>
         );
@@ -188,22 +188,19 @@ const Static = () => {
   };
 
   const handleSectionControls = (e, idx) => {
-    let allValues = controls;
-    let capturedValue = controls[idx];
+    let allValues = [...controls];
+    let capturedValue = allValues[idx];
     switch (e.target.name) {
       case "color":
         capturedValue.color = e.target.value;
-        allValues[idx] = capturedValue;
-        return setControls(allValues);
+        return setSection(allValues);
 
       case "seats":
         capturedValue.seats = Number(e.target.value);
-        allValues[idx] = capturedValue;
-        return setControls(allValues);
+        return setSection(allValues);
       case "price":
         capturedValue.price = Number(e.target.value);
-        allValues[idx] = capturedValue;
-        return setControls(allValues);
+        return setSection(allValues);
       default:
         break;
     }
@@ -222,13 +219,13 @@ const Static = () => {
       case viewPort <= 900:
         return setSize("md");
 
-      case viewPort >= 1200:
+      case viewPort >= 1400:
         return setSize("xl");
 
       default:
         break;
     }
-  });
+  },[size]);
   return (
     <Box
       sx={{
@@ -330,14 +327,6 @@ const Static = () => {
                   fullWidth
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
-                <Box sx={{width:"100%",display:"flex",justifyContent:"end",alignItems:"center",p:1}}>
-                  <Fab size="small" sx={{backgroundColor:section[idx]?.color}}
-                   onClick={() => setSection(controls)}
-                    
-                  >
-                    <Add/>
-                  </Fab>
-                </Box>
               </AccordionDetails>
             </Accordion>
           );
