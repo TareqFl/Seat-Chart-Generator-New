@@ -49,7 +49,7 @@ const Static = () => {
         return (
          <Box>
           <Typography variant="h6" textAlign="center">{`Section ${sec.section}`}</Typography>
-          <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
+          <Grid key={idx} container  justifyContent="start" sx={{ mb: 5,gap:{xs:2.5,lg:4} }}>
             <SeatsGenerated
               SectionIndex={sec.section}
               seats={sec.seats}
@@ -112,9 +112,12 @@ const Static = () => {
             }
             variant="contained"
             fullWidth
+           
             sx={{
+              
               backgroundColor: color,
               "&:hover": { backgroundColor: color, scale: "1.3" },
+              
             }}
             onClick={() => {
               setPickedSeat((prevValue) => {
@@ -135,7 +138,7 @@ const Static = () => {
               });
             }}
           >
-            <Typography variant="h6" textAlign="center">
+            <Typography variant="h6" textAlign="center" sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>
               {st} {idx + 1}
             </Typography>
           </Button>
@@ -151,9 +154,11 @@ const Static = () => {
         <Button
           key={idx}
           variant="contained"
+      
           sx={{
             backgroundColor: s.color,
             "&:hover": { scale: "1.2", backgroundColor: s.color },
+            fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}
           }}
           onClick={() => handleSeatDelete(s, s.price)}
         >
@@ -225,8 +230,7 @@ const Static = () => {
   return (
     <Box
       sx={{
-        height: "100vh",
-        width: "100vw",
+        
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -237,7 +241,7 @@ const Static = () => {
       {/* Controls */}
       <Button
         variant="contained"
-        sx={{ position: "absolute", top: "15%", left: {xs:"5%",md:"2.5%"} }}
+        sx={{ position: "absolute", top: {xs:"10%"}, left: {xs:"5%",md:"2.5%"} }}
         onClick={() => setShow(!show)}
       >
         Controls
@@ -258,6 +262,7 @@ const Static = () => {
             lg: show ? "0.75%" : "-20%",
             xl: show ? "0.5%" : "-20%",
           },
+          top:{xs:"15%",},
           overflowY: "scroll",
           transition: "0.375s",
           zIndex: 10,
@@ -343,7 +348,7 @@ const Static = () => {
         sx={{
           height: "800px",
           transition: "1s",
-          mt:{xs:1,sm:35,lg:50,xl:0}
+          mt:{xs:20,lg:25,xl:15}
         }}
         maxWidth={size}
       >
@@ -360,7 +365,7 @@ const Static = () => {
               alignItems: "center",
             }}
           >
-            <Typography variant="h1" textTransform={"uppercase"}>
+            <Typography variant="h1" textTransform={"uppercase"} sx={{fontSize:{xs:"2rem",sm:"4rem",lg:"8rem"}}}>
               Stage
             </Typography>
           </Paper>
@@ -390,8 +395,8 @@ const Static = () => {
             </Box>
 
             {/* Cart Side */}
-            <Box sx={{ height: "100%", flexGrow: 1 }}>
-              <Typography variant="h1" textAlign="center">
+            <Box sx={{ height: "100%", flexGrow: 1  }}>
+              <Typography variant="h1" textAlign="center"sx={{fontSize:{xs:"2rem",sm:"4rem",lg:"8rem"}}}>
                 Cart
               </Typography>
               <Stack
@@ -399,21 +404,22 @@ const Static = () => {
                 direction="column"
                 sx={{
                   width: "100%",
-                  height: "300px",
-
+                  height: {xs:"200px",sm:"400px",lg:"300px"},
                   overflowY: "scroll",
-                  padding: 5,
-                  mb: 2,
+                  padding: {xs:0,lg:5},
+                  mb: {xs:0,lg:5},
                 }}
                 spacing={2}
               >
                 <PickedSeat />
               </Stack>
-              <Typography variant="h6">{`Total Amount: ${amount ? amount : 0}$`}</Typography>
-              <Typography variant="h6">{`Total Seats: ${pickedSeat.length}`}</Typography>
-              <Button variant="contained" fullWidth>
+              <Box p={1}>
+              <Typography variant="h6"  sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>{`Total Amount: ${amount ? amount : 0}$`}</Typography>
+              <Typography variant="h6"  sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>{`Total Seats: ${pickedSeat.length}`}</Typography>
+              <Button variant="contained" fullWidth onClick={()=> window.location.reload()} sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>
                 Continue to Checkout
               </Button>
+              </Box>
             </Box>
           </Stack>
         </Paper>
