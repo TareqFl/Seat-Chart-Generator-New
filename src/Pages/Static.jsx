@@ -23,23 +23,7 @@ const Static = () => {
   const [show, setShow] = React.useState(false);
   const [size, setSize] = React.useState("xl");
 
-  const sections = [
-    {
-      seats: 28,
-      color: "red",
-      price: 25,
-    },
-    {
-      seats: 28,
-      color: "green",
-      price: 15,
-    },
-    {
-      seats: 28,
-      color: "orange",
-      price: 10,
-    },
-  ];
+
 
   // Generate Sections
   const SectionsGenerated = ({ value }) => {
@@ -62,7 +46,7 @@ const Static = () => {
       }else{
         return (
           <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
-           <Grid Item xs={12}>
+           <Grid item xs={12}>
             <Typography variant="h1" textAlign="center">
               Insert Data
             </Typography>
@@ -120,6 +104,7 @@ const Static = () => {
               
             }}
             onClick={() => {
+              
               setPickedSeat((prevValue) => {
                 return [
                   ...prevValue,
@@ -136,6 +121,7 @@ const Static = () => {
               setAmount((prevValue) => {
                 return prevValue + price;
               });
+             
             }}
           >
             <Typography variant="h6" textAlign="center" sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>
@@ -166,24 +152,42 @@ const Static = () => {
         </Button>
       );
     });
+ 
   };
 
   // Delete Seat and deduct from total Amount
   const handleSeatDelete = (section, price) => {
     let newValue = pickedSeat.filter((el) => el !== section && el);
-    setPickedSeat(newValue);
+    setPickedSeat(prevValue=>{
+      return [...newValue]
+    });
     setAmount((prevValue) => {
       return prevValue - price;
     });
   };
 
+
+  // Handle Section Delete
   const handleSectionDelete = (sec) => {
     let newValue = section.filter((el) => {
       return el !== sec;
-    });
-   
-    setControls(newValue)
-    setSection(newValue);
+    }); 
+    setControls([...newValue])
+    setSection([...newValue]);
+    let newSeats = pickedSeat.filter(el=>{
+      return el.section !== sec.section
+    })
+
+   setPickedSeat([...newSeats])
+if(newSeats.length > 0){
+  setAmount(0)
+  newSeats.forEach(st=>setAmount(prevValue=>{
+    return prevValue + st.price
+  }))
+}else{
+  setAmount(0)
+}
+
   };
 
   const handleSectionControls = (e, idx) => {
@@ -238,6 +242,16 @@ const Static = () => {
 
       }}
     >
+      <Typography onClick={()=> window.open("https://github.com/TareqFl")} sx={{
+        textDecoration:"none",
+        fontWeight:"bold",
+        fontSize:"1.5rem",
+        position:"absolute",
+        right:{xs:"5%",md:"2.5%"},
+        top:"10%",
+        "&:hover":{cursor:"pointer"}
+          }}
+          >Tareq Fleyfel GitHub</Typography>
       {/* Controls */}
       <Button
         variant="contained"
@@ -297,8 +311,8 @@ const Static = () => {
                   alignItems="center"
                   width="100%"
                 >
-                  <Typography variant="h6" textAlign="center">{`section${
-                    idx + 1
+                  <Typography variant="h6" textAlign="center">{`section ${
+                    section[idx]? section[idx].section: idx + 1
                   }`}</Typography>
                   <IconButton
                     size="small"
@@ -310,6 +324,7 @@ const Static = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <TextField
+                value={sec.color}
                   variant="standard"
                   name={`color`}
                   label={`color`}
@@ -317,6 +332,7 @@ const Static = () => {
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
                 <TextField
+                value={sec.seats}
                   variant="standard"
                   name={`seats`}
                   label={`seats quantity Must Be a Number`}
@@ -324,6 +340,7 @@ const Static = () => {
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
                 <TextField
+                value={sec.price}
                   variant="standard"
                   name={`price`}
                   label={`price Must Be a Number`}
@@ -331,6 +348,7 @@ const Static = () => {
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
                   <TextField
+                  value={sec.section}
                   variant="standard"
                   name={`section`}
                   label={`Enter Section`}
