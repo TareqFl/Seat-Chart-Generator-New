@@ -284,7 +284,7 @@ const Static = () => {
 
         {controls.map((sec, idx) => {
           return (
-            <Accordion key={idx} sx={{ width: "100%", mt: 1 }}>
+            <Accordion key={idx} sx={{ width: "100%", mt: 1 }} elevation={6}>
               <AccordionSummary
                 expandIcon={<ExpandMore />}
                 aria-controls="panel1a-content"
