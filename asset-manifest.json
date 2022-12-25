@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/Seat-Chart-Generator-New/static/css/main.48a36ea9.css",
-    "main.js": "/Seat-Chart-Generator-New/static/js/main.921ef338.js",
+    "main.js": "/Seat-Chart-Generator-New/static/js/main.3ce87084.js",
     "index.html": "/Seat-Chart-Generator-New/index.html",
     "main.48a36ea9.css.map": "/Seat-Chart-Generator-New/static/css/main.48a36ea9.css.map",
-    "main.921ef338.js.map": "/Seat-Chart-Generator-New/static/js/main.921ef338.js.map"
+    "main.3ce87084.js.map": "/Seat-Chart-Generator-New/static/js/main.3ce87084.js.map"
   },
   "entrypoints": [
     "static/css/main.48a36ea9.css",
-    "static/js/main.921ef338.js"
+    "static/js/main.3ce87084.js"
   ]
 }
