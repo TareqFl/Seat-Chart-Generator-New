@@ -1,4 +1,4 @@
-import {Close, ExpandMore } from "@mui/icons-material";
+import { Close, ExpandMore } from "@mui/icons-material";
 import {
   Accordion,
   AccordionDetails,
@@ -19,38 +19,49 @@ const Static = () => {
   const [pickedSeat, setPickedSeat] = React.useState([]);
   const [amount, setAmount] = React.useState(0);
   const [section, setSection] = React.useState([]);
-  const [controls,setControls] = React.useState([])
+  const [controls, setControls] = React.useState([]);
   const [show, setShow] = React.useState(false);
   const [size, setSize] = React.useState("xl");
-
-
 
   // Generate Sections
   const SectionsGenerated = ({ value }) => {
     return value?.map((sec, idx) => {
- 
-      if(sec.seats && sec.color && sec.price && sec.section){
+      if (sec.seats && sec.color && sec.price && sec.section) {
         return (
-         <Box>
-          <Typography variant="h6" textAlign="center">{`Section ${sec.section}`}</Typography>
-          <Grid key={idx} container  justifyContent="start" sx={{ mb: 5,gap:{xs:2.5,lg:4} }}>
-            <SeatsGenerated
-              SectionIndex={sec.section}
-              seats={sec.seats}
-              color={sec.color}
-              price={sec.price} 
-            />
-          </Grid>
-         </Box>
+          <Box>
+            <Typography
+              variant="h6"
+              textAlign="center"
+            >{`Section ${sec.section}`}</Typography>
+            <Grid
+              key={idx}
+              container
+              justifyContent="start"
+              sx={{ mb: 5, gap: { xs: 2.5, lg: 4 } }}
+            >
+              <SeatsGenerated
+                SectionIndex={sec.section}
+                seats={sec.seats}
+                color={sec.color}
+                price={sec.price}
+              />
+            </Grid>
+          </Box>
         );
-      }else{
+      } else {
         return (
-          <Grid key={idx} container gap={4} justifyContent="start" sx={{ mb: 5 }}>
-           <Grid item xs={12}>
-            <Typography variant="h1" textAlign="center">
-              Insert Data
-            </Typography>
-           </Grid>
+          <Grid
+            key={idx}
+            container
+            gap={4}
+            justifyContent="start"
+            sx={{ mb: 5 }}
+          >
+            <Grid item xs={12}>
+              <Typography variant="h1" textAlign="center">
+                Insert Data
+              </Typography>
+            </Grid>
           </Grid>
         );
       }
@@ -66,7 +77,6 @@ const Static = () => {
         defaultSeats.push("Seat");
       }
     } else {
-    
       defaultSeats = [];
     }
 
@@ -96,15 +106,11 @@ const Static = () => {
             }
             variant="contained"
             fullWidth
-           
             sx={{
-              
               backgroundColor: color,
               "&:hover": { backgroundColor: color, scale: "1.3" },
-              
             }}
             onClick={() => {
-              
               setPickedSeat((prevValue) => {
                 return [
                   ...prevValue,
@@ -121,10 +127,13 @@ const Static = () => {
               setAmount((prevValue) => {
                 return prevValue + price;
               });
-             
             }}
           >
-            <Typography variant="h6" textAlign="center" sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>
+            <Typography
+              variant="h6"
+              textAlign="center"
+              sx={{ fontSize: { xs: "0.5rem", sm: "0.5rem", lg: "1rem" } }}
+            >
               {st} {idx + 1}
             </Typography>
           </Button>
@@ -140,11 +149,10 @@ const Static = () => {
         <Button
           key={idx}
           variant="contained"
-      
           sx={{
             backgroundColor: s.color,
             "&:hover": { scale: "1.2", backgroundColor: s.color },
-            fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}
+            fontSize: { xs: "0.5rem", sm: "0.5rem", lg: "1rem" },
           }}
           onClick={() => handleSeatDelete(s, s.price)}
         >
@@ -152,42 +160,41 @@ const Static = () => {
         </Button>
       );
     });
- 
   };
 
   // Delete Seat and deduct from total Amount
   const handleSeatDelete = (section, price) => {
     let newValue = pickedSeat.filter((el) => el !== section && el);
-    setPickedSeat(prevValue=>{
-      return [...newValue]
+    setPickedSeat((prevValue) => {
+      return [...newValue];
     });
     setAmount((prevValue) => {
       return prevValue - price;
     });
   };
 
-
   // Handle Section Delete
   const handleSectionDelete = (sec) => {
     let newValue = section.filter((el) => {
       return el !== sec;
-    }); 
-    setControls([...newValue])
+    });
+    setControls([...newValue]);
     setSection([...newValue]);
-    let newSeats = pickedSeat.filter(el=>{
-      return el.section !== sec.section
-    })
+    let newSeats = pickedSeat.filter((el) => {
+      return el.section !== sec.section;
+    });
 
-   setPickedSeat([...newSeats])
-if(newSeats.length > 0){
-  setAmount(0)
-  newSeats.forEach(st=>setAmount(prevValue=>{
-    return prevValue + st.price
-  }))
-}else{
-  setAmount(0)
-}
-
+    setPickedSeat([...newSeats]);
+    if (newSeats.length > 0) {
+      setAmount(0);
+      newSeats.forEach((st) =>
+        setAmount((prevValue) => {
+          return prevValue + st.price;
+        })
+      );
+    } else {
+      setAmount(0);
+    }
   };
 
   const handleSectionControls = (e, idx) => {
@@ -197,9 +204,9 @@ if(newSeats.length > 0){
       case "color":
         capturedValue.color = e.target.value;
         return setSection(allValues);
-        case "section":
-          capturedValue.section = e.target.value;
-          return setSection(allValues);
+      case "section":
+        capturedValue.section = e.target.value;
+        return setSection(allValues);
       case "seats":
         capturedValue.seats = Number(e.target.value);
         return setSection(allValues);
@@ -209,7 +216,6 @@ if(newSeats.length > 0){
       default:
         break;
     }
-
   };
 
   React.useEffect(() => {
@@ -230,44 +236,50 @@ if(newSeats.length > 0){
       default:
         break;
     }
-  },[size]);
+  }, [size]);
   return (
     <Box
       sx={{
-        
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         position: "relative",
-
       }}
     >
-      <Typography onClick={()=> window.open("https://github.com/TareqFl")} sx={{
-        textDecoration:"none",
-        fontWeight:"bold",
-        fontSize:"1.5rem",
-        position:"absolute",
-        right:{xs:"5%",md:"2.5%"},
-        top:"10%",
-        "&:hover":{cursor:"pointer"}
-          }}
-          >Tareq Fleyfel GitHub</Typography>
+      <Typography
+        onClick={() => window.open("https://github.com/TareqFl")}
+        sx={{
+          textDecoration: "none",
+          fontWeight: "bold",
+          fontSize: { xs: "1rem", xm: "1.5rem" },
+          position: "absolute",
+          right: { xs: "5%", md: "2.5%" },
+          top: { xs: "15%", md: "10%" },
+
+          "&:hover": { cursor: "pointer" },
+        }}
+      >
+        Tareq Fleyfel GitHub
+      </Typography>
       {/* Controls */}
       <Button
         variant="contained"
-        sx={{ position: "absolute", top: {xs:"10%"}, left: {xs:"5%",md:"2.5%"} }}
+        sx={{
+          position: "absolute",
+          top: { xs: "15%", md: "10%" },
+          left: { xs: "5%", md: "2.5%" },
+        }}
         onClick={() => setShow(!show)}
       >
         Controls
       </Button>
-
 
       {/* Add Section Controls */}
       <Paper
         elevation={0}
         sx={{
           height: "50vh",
-          width: { xs: "50%", sm: "25%", lg: "20%",xl:"15%" },
+          width: { xs: "50%", sm: "25%", lg: "20%", xl: "15%" },
           backgroundColor: "transparent",
           position: "absolute",
           left: {
@@ -276,7 +288,7 @@ if(newSeats.length > 0){
             lg: show ? "0.75%" : "-20%",
             xl: show ? "0.5%" : "-20%",
           },
-          top:{xs:"15%",},
+          top: { xs: "25%", md: "15%", lg: "18%" },
           overflowY: "scroll",
           transition: "0.375s",
           zIndex: 10,
@@ -286,11 +298,11 @@ if(newSeats.length > 0){
           variant="contained"
           color="warning"
           fullWidth
-          onClick={() =>{
+          onClick={() => {
             setControls((prevValue) => [
               ...prevValue,
               { seats: 0, color: "", price: 0 },
-            ])
+            ]);
           }}
         >
           Add Section
@@ -312,7 +324,7 @@ if(newSeats.length > 0){
                   width="100%"
                 >
                   <Typography variant="h6" textAlign="center">{`section ${
-                    section[idx]? section[idx].section: idx + 1
+                    section[idx] ? section[idx].section : idx + 1
                   }`}</Typography>
                   <IconButton
                     size="small"
@@ -324,7 +336,7 @@ if(newSeats.length > 0){
               </AccordionSummary>
               <AccordionDetails>
                 <TextField
-                value={sec.color}
+                  value={sec.color}
                   variant="standard"
                   name={`color`}
                   label={`color`}
@@ -332,7 +344,7 @@ if(newSeats.length > 0){
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
                 <TextField
-                value={sec.seats}
+                  value={sec.seats}
                   variant="standard"
                   name={`seats`}
                   label={`seats quantity Must Be a Number`}
@@ -340,14 +352,14 @@ if(newSeats.length > 0){
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
                 <TextField
-                value={sec.price}
+                  value={sec.price}
                   variant="standard"
                   name={`price`}
                   label={`price Must Be a Number`}
                   fullWidth
                   onChange={(e) => handleSectionControls(e, idx)}
                 />
-                  <TextField
+                <TextField
                   value={sec.section}
                   variant="standard"
                   name={`section`}
@@ -364,9 +376,9 @@ if(newSeats.length > 0){
       {/* Middle Section */}
       <Container
         sx={{
-          height: "800px",
+          height: { xs: "400px", sm: "600px" },
           transition: "1s",
-          mt:{xs:20,lg:25,xl:15}
+          mt: { xs: 20, lg: 25, xl: 15 },
         }}
         maxWidth={size}
       >
@@ -383,7 +395,11 @@ if(newSeats.length > 0){
               alignItems: "center",
             }}
           >
-            <Typography variant="h1" textTransform={"uppercase"} sx={{fontSize:{xs:"2rem",sm:"4rem",lg:"8rem"}}}>
+            <Typography
+              variant="h1"
+              textTransform={"uppercase"}
+              sx={{ fontSize: { xs: "2rem", sm: "4rem", lg: "8rem" } }}
+            >
               Stage
             </Typography>
           </Paper>
@@ -398,10 +414,10 @@ if(newSeats.length > 0){
             <Box
               id="Generated Seats Section"
               sx={{
-                height: "600px",
+                height: { xs: "300px", sm: "600px" },
                 width: "75%",
                 mt: "5%",
-                overflow: "scroll",
+                overflow: "auto",
               }}
             >
               <Box sx={{ width: "1200px", p: 4 }}>
@@ -413,8 +429,12 @@ if(newSeats.length > 0){
             </Box>
 
             {/* Cart Side */}
-            <Box sx={{ height: "100%", flexGrow: 1  }}>
-              <Typography variant="h1" textAlign="center"sx={{fontSize:{xs:"2rem",sm:"4rem",lg:"8rem"}}}>
+            <Box sx={{ height: "100%", flexGrow: 1 }}>
+              <Typography
+                variant="h1"
+                textAlign="center"
+                sx={{ fontSize: { xs: "2rem", sm: "4rem", lg: "8rem" } }}
+              >
                 Cart
               </Typography>
               <Stack
@@ -422,21 +442,32 @@ if(newSeats.length > 0){
                 direction="column"
                 sx={{
                   width: "100%",
-                  height: {xs:"200px",sm:"400px",lg:"300px"},
+                  height: { xs: "200px", sm: "400px", lg: "300px" },
                   overflowY: "scroll",
-                  padding: {xs:0,lg:5},
-                  mb: {xs:0,lg:5},
+                  padding: { xs: 0, lg: 5 },
+                  mb: { xs: 0, lg: 5 },
                 }}
                 spacing={2}
               >
                 <PickedSeat />
               </Stack>
               <Box p={1}>
-              <Typography variant="h6"  sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>{`Total Amount: ${amount ? amount : 0}$`}</Typography>
-              <Typography variant="h6"  sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>{`Total Seats: ${pickedSeat.length}`}</Typography>
-              <Button variant="contained" fullWidth onClick={()=> window.location.reload()} sx={{fontSize:{xs:"0.5rem",sm:"0.5rem",lg:"1rem"}}}>
-                Continue to Checkout
-              </Button>
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: { xs: "0.5rem", sm: "0.5rem", lg: "1rem" } }}
+                >{`Total Amount: ${amount ? amount : 0}$`}</Typography>
+                <Typography
+                  variant="h6"
+                  sx={{ fontSize: { xs: "0.5rem", sm: "0.5rem", lg: "1rem" } }}
+                >{`Total Seats: ${pickedSeat.length}`}</Typography>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  onClick={() => window.location.reload()}
+                  sx={{ fontSize: { xs: "0.5rem", sm: "0.5rem", lg: "1rem" } }}
+                >
+                  Continue to Checkout
+                </Button>
               </Box>
             </Box>
           </Stack>
